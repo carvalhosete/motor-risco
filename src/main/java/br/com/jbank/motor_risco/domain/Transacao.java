@@ -1,6 +1,9 @@
 package br.com.jbank.motor_risco.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,10 +19,17 @@ public class Transacao {
     @ManyToOne
     private Cliente cliente;
 
-    private int contaOrigem;
-    private int contaDestino;
+    @NotNull(message = "O ID da conta de origem é obrigatório.")
+    private String contaOrigem;
+    @NotNull(message = "O ID da conta de destino é obrigatório.")
+    private String contaDestino;
+
+    @Positive(message = "O valor da transferência deve ser maior que zero.")
     private BigDecimal valor;
+
+    @CreationTimestamp
     private LocalDateTime dataHora;
+
     private boolean statusAnalise;
 
     public Long getId() {
@@ -30,19 +40,19 @@ public class Transacao {
         this.id = id;
     }
 
-    public int getContaOrigem() {
+    public String getContaOrigem() {
         return contaOrigem;
     }
 
-    public void setContaOrigem(int contaOrigem) {
+    public void setContaOrigem(String contaOrigem) {
         this.contaOrigem = contaOrigem;
     }
 
-    public int getContaDestino() {
+    public String getContaDestino() {
         return contaDestino;
     }
 
-    public void setContaDestino(int contaDestino) {
+    public void setContaDestino(String contaDestino) {
         this.contaDestino = contaDestino;
     }
 

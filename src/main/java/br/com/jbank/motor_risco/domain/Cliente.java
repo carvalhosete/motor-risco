@@ -1,19 +1,20 @@
 package br.com.jbank.motor_risco.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
 @Entity
+@Table(name= "tb_Cliente")
 public class Cliente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
     private String cpf;
+    private String numeroConta;
+    private boolean confiavel;
 
     public Long getId() {
         return id;
@@ -37,5 +38,21 @@ public class Cliente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getNumeroConta() {
+        return numeroConta;
+    }
+
+    public void setNumeroConta(String numeroConta) {
+        this.numeroConta = numeroConta;
+    }
+
+    public boolean isConfiavel() {
+        return confiavel;
+    }
+
+    public void setConfiavel(boolean confiavel) {
+        this.confiavel = confiavel;
     }
 }

@@ -3,6 +3,7 @@ package br.com.jbank.motor_risco.controller;
 import br.com.jbank.motor_risco.domain.Transacao;
 import br.com.jbank.motor_risco.dto.TransacaoDTO;
 import br.com.jbank.motor_risco.service.AnaliseRiscoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class TransacaoController {
     }
 
     @PostMapping("/analise")
-    public ResponseEntity<TransacaoDTO> analisarCPF(@RequestBody TransacaoDTO dto){
+    public ResponseEntity<TransacaoDTO> analisarCPF(@Valid @RequestBody TransacaoDTO dto){
         var transacaoSalva = service.analisar(dto.cpf(), dto.transacao());
         TransacaoDTO dtoResposta = new TransacaoDTO(dto.cpf(), transacaoSalva);
 
