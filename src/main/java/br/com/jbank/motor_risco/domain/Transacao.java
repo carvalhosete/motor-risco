@@ -40,6 +40,14 @@ public class Transacao {
         this.id = id;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public String getContaOrigem() {
         return contaOrigem;
     }

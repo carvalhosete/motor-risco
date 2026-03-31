@@ -3,6 +3,7 @@ package br.com.jbank.motor_risco.repository;
 import br.com.jbank.motor_risco.domain.Transacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
     @Query("SELECT t FROM Transacao t JOIN FETCH t.cliente")
     List<Transacao> buscarTodosClientes();
+
+    @Query("SELECT t FROM Transacao t JOIN FETCH t.cliente c WHERE c.cpf = :cpf")
+    List<Transacao> buscarTransacaoPorCpf(@Param("cpf") String cpf);
 }

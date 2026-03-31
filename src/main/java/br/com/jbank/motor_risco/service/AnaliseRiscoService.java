@@ -7,9 +7,8 @@ import br.com.jbank.motor_risco.repository.TransacaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class AnaliseRiscoService {
@@ -26,13 +25,23 @@ public class AnaliseRiscoService {
         return transacaoRepository.buscarTodosClientes();
     }
 
+    public List<Transacao> buscarRelatorioPorCpf(String cpf){
+        return transacaoRepository.buscarTransacaoPorCpf(cpf);
+    }
+
 
     @Transactional
     public Transacao analisar(String cpf, Transacao transacao){
         Cliente clienteEncontrado = clienteRepository.findByCpf(cpf)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado na base de dados."));
 
-        transacao.setStatusAnalise(clienteEncontrado.isConfiavel());
+        if(!clienteEncontrado.isConfiavel()){
+            throw new RuntimeException("ATENÇÃO! Transação não realizada, entre em contato com sua instituição financeira.");
+        }
+
+        transacao.setStatusAnalise(true);
+        transacao.setCliente(clienteEncontrado);
+
         return transacaoRepository.save(transacao);
     }
 }

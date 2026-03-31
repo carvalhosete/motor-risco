@@ -26,6 +26,13 @@ public class TransacaoController {
         return ResponseEntity.ok(relatorio);
     }
 
+    @GetMapping("/relatorio/{cpf}")
+    public ResponseEntity<List<Transacao>> relatorioPorCpf(@PathVariable String cpf){
+        var relatorio = service.buscarRelatorioPorCpf(cpf);
+
+        return ResponseEntity.ok(relatorio);
+    }
+
     @PostMapping("/analise")
     public ResponseEntity<TransacaoDTO> analisarCPF(@Valid @RequestBody TransacaoDTO dto){
         var transacaoSalva = service.analisar(dto.cpf(), dto.transacao());
